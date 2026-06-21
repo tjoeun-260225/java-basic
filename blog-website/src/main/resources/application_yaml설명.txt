@@ -1,0 +1,38 @@
+파일이름.jpg  파일이름.jpeg
+window 컴퓨터를 만들 때 확장자이름 3개이상 못쓰게 했음
+3개이상 가능하도록 업데이트가 되었음
+yml 가능 yaml 가능
+
+application.properties
+application.yaml = application.yml
+
+properties와 yaml(=yml)은 같은 역할을 하지만, 문법(포맷)이 다르다.
+application.properties
+키=값 형태로 한줄씩 모두다 풀네임으로 작성
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+application.yaml = application.yml
+들여쓰기 계층으로 구조 표현
+중복되는 spring 같은 접두사를 한 번만 쓰고 묶을 수 있다.
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  application:
+    name: blog-website

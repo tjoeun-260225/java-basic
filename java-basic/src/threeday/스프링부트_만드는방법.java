@@ -38,6 +38,7 @@ public class 스프링부트_만드는방법 {
        Configuration    환경 설정
         - Properties  : 레거시 방법
         - YAML        : 최근 트랜드
+
        Java
         - 17          : 안정된 버전
         - 21          : 최근 안정된 버전으로 각광받고 있는 자바 버전
