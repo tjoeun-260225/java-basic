@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+    # Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "POST" not found (this database is empty); SQL statement:
+    #INSERT INTO post(title, content) VALUES ('첫 번째 글', '안녕하세요.첫글입니다.') [42104-240]
+  application:
+    name: blog-website
+# 1. 서버 설정
+# 스프링부트 개발자 웹사이트로 접속할 수 있는 기본 포트의 경우
+# 8080 이지만 8080에서 다른 포트번호로 변경하고자 할 경우 개발자가 직접 작성가능
+server:
+  port: 8080 # 기본 포트에서 원하는 포트로 변경 가능
+  # 되도록이면 4글자 단위 포트번호 사용
+  # 프로그램 회사들마다 사용하는 포트번호는 피해서 사용
+  # mysql = 3306
+  # postgresql = 5432
+  # 와 같이 회사들이 자주 사용하는 포트번호는 피한다.
+  # mysql 이 실행되고 있는데 스프링을 3306에서 실행하고 싶다 하면
+  # 이미 사용하고 있는 포트번호 입니다 하면서 웹사이트 구동이 안된다.
+
+# 이외에도 로그 설정 / 프로필 분리 / 보안 세팅 / 이메일 보내기 받기 설정
+# 파일 업로드 설정  / 모니터링 캐시 Redis 등 외부 서비스 연동 / 암호키 저장과 같은 세팅 가능
+# 보통 application.yaml 에는 민감한 보안사항이 포함되어 있을 수 있기 때문에
+# 서버에 직접적으로 업로드 하지 않고
+# 보안설정을 한 다음 업로드나 가져와서 사용하기 와 같은 방법으로 사용
+
+
+
+
+
+
+

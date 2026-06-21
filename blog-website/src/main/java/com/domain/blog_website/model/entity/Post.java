@@ -7,6 +7,7 @@ package com.domain.blog_website.model.entity;
 // entity = db 를 만들어주는 객체
 // dto    = 프론트엔드 → 컨트롤러 → 백엔드 데이터 저장 전달 주고받는 통신에
 //          데이터베이스 존재
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +21,8 @@ lombok 이라는 라이브러리에 존재하는 모든 도구들을 가져와�
 import lombok.*;
  */
 import lombok.*;
+@Entity
+// DataJpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Not a managed type: class com.domain.blog_website.model.entity.Post
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Post {
     @Id

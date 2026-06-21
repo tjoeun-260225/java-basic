@@ -20,9 +20,10 @@ th 라는 별칭으로 줄여서 사용하겠다.
         <th>내용</th>
     </tr>
     <tr th:each="p : ${posts}">
-        <td th:text="${post.id}"></td>
-        <td th:text="${post.title}"></td>
-        <td th:text="${post.content}"></td>
+        <!-- <td th:text="${post.id}"></td>-->
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.title}"></td>
+        <td th:text="${p.content}"></td>
     </tr>
 </table>
 </body>
