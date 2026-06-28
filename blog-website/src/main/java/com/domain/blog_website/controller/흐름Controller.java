@@ -1,6 +1,7 @@
 package com.domain.blog_website.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /*
@@ -18,7 +19,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class 흐름Controller {
 
     @GetMapping("/testurl")
-    public String 테스트페이지(){
-        return "test";
+    public String 테스트페이지(Model model){
+
+        model.addAttribute("data_1",
+                "안녕하세요.");
+        model.addAttribute("data_2",
+                1);
+        return "test";//test.html 에는
+        // data_1 :"안녕하세요"
+        // data_2 :1            변수이름:데이터 형태로 전달
     }
 }

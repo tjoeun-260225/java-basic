@@ -6,5 +6,19 @@
 </head>
 <body>
 <h1>테스트페이지 접속 확인</h1>
+<p th:text="${data_1}"></p>
+<p th:text="${data_2}"></p>
+<!--
+th:text="${data_1}"
+Controller 에서 data_1 변수에 들어있는 데이터를
+현재 p 태그 내부에서 사용하겠다. 표기법
+
+model.addAttribute("data_1", "안녕하세요.");
+
+
+th:text="data_3"
+단순히 현재 p 태그에서 data_3 명칭을 넣어주겠다 표기법
+-->
+<p th:text="data_3"></p>
 </body>
 </html>
