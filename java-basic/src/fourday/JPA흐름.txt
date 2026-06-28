@@ -1,0 +1,58 @@
+Spring Boot + JPA + Gradle + Yml
+
+웹프로젝트
+     build.gradle   의존성 관리 (라이브러리 목록)
+     src/main
+         resources
+            application.yml       설정값 (DB주소, port 등) - 하위 항목에 어떤 세팅을 해주어야 하는지 샘플 형식
+            application-dev.yml   개발 중 일 때 사용하는 환경
+            application-stg.yml   개발이 어느정도 되고 회사 내부에서 테스트 환경
+            application-prod.yml  개발 끝났고 소비자에게 배포하는 환경
+            config.yml            외부에 보여지면 안되는 환경 세팅 값
+            templates
+               .html    파일 존재
+            static
+               .js .css 파일 존재
+         java/com/도메인
+             프로젝트Application.java   시작 위치
+             model          데이터 관련된 모든 폴더
+                entity      DB 테이블 매핑
+                dto         controller - service - db 간 데이터 전달
+                vo          값 객체 불변 - 이메일 인증 db 관련없는 객체
+                service     작업해야하는 실제 로직
+                repository  DB 접근 메서드 작성
+             controller     HTTP html 페이지로 소비자의 요청 / 응답
+                            소비자의 보여지지 않는 요청 처리 반환 html
+             config         설정 클래스 모음
+                            application 과 같은 yml에서 한줄로 끝나지 않을
+                            세부 설정 모음
+                            외부 라이브러리 초기화 보안설정 스케쥴링 등 정의
+             util           유틸리티 클래스
+                            여러 곳에서 공통으로 사용하는 도우미 기능
+                            특정 도메인에 속하지 않고, 이것저것 가져다 사용하는 함수 모음
+                            DateUtil / JwtUtil / FileUtil / PageUtil .... 등등
+dev = dev.env
+- development
+- 개발자 로컬 컴퓨터 또는 개발 서버
+- DB 데이터가 날아도 상관없고, 아무 테스트 데이터 넣고
+  SQL 콘솔에 다 출력
+  오류 메세지 상세히 다 보여줌
+stage
+- prod 배포 전에 테스트
+- 기획자, QA팀이 실제로 써보면서 검증
+- prod 데이터를 복사해서 사용하기도 함
+- 실제 외부 API 연동해서 테스트 결제 카카오 로그인 등
+- 여기서 문제 없으면 prod 에서 배포하는 기준선
+product
+- 실제 사용자가 쓰는 환경
+- 여기서 장애나면 곧 민원, 손실, 피해보상 행
+- 오류 메세지는 소비자에게 보여주는 것을 최소화
+- db 백업 필수
+- 비밀번호 api 키 등 모든 보안은 환경변수 관리
+
+application.yml
+spring:
+    profiles:
+        active: dev
+와 같이 active 를 변경해서 dev / stage / prod 환경 전환하여 사용
+application.yml -> 어떤 환경을 사용할지 와 같은 선택 세팅

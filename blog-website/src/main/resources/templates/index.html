@@ -1,3 +1,23 @@
+<!--
+html 과 jsp 폴더 구조 차이
+html
+src/main/resources/templates/ 내부에 html 확장자 사용
+
+jsp
+src/main/webapp/WEB-INF/views 내부에 jsp 확장자 사용
+webapp = resources 폴더와 같은 형태로 사용
+WEB-INF = 브라우저가 직접 접근 못하는 보호 구역
+
+1999년 java에서 서블릿 스펙을 만들며 정한 규칙
+웹 어플리케이션 구조를 통일
+WEB-INF 폴더 안에 내용은 클라이언트에게 직접 제공되어서는 안된다.
+WEB-INFormation 약자로
+공개자원(css js 이미지) 가 아닌 내부 구성 정보 라는
+                                   의미로 지은 이름
+    webapp      =      resources    동일한 역할
+WEB-INF/views          templates   .jsp  or .html 코드 작성
+    static               static     .css .js .img 등 존재
+-->
 <!DOCTYPE html>
 <!--
 현재 index.html 페이지에서
@@ -8,19 +28,15 @@ th 라는 별칭으로 줄여서 사용하겠다.
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>블로그</title>
+    <meta charset="UTF-8"> <title>블로그</title>
 </head>
 <body>
 <h1>게시글 목록</h1>
 <table border="1">
     <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>내용</th>
+        <th>번호</th> <th>제목</th> <th>내용</th>
     </tr>
     <tr th:each="p : ${posts}">
-        <!-- <td th:text="${post.id}"></td>-->
         <td th:text="${p.id}"></td>
         <td th:text="${p.title}"></td>
         <td th:text="${p.content}"></td>
