@@ -7,10 +7,11 @@ package com.domain.blog_website.model.entity;
 // entity = db 를 만들어주는 객체
 // dto    = 프론트엔드 → 컨트롤러 → 백엔드 데이터 저장 전달 주고받는 통신에
 //          데이터베이스 존재
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 /*
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,32 @@ import lombok.*;
 @Entity
 // DataJpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Not a managed type: class com.domain.blog_website.model.entity.Post
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
+/*
+import jakarta.persistence
+-> javax 심하게 오래된 버전의 AI 모델이므로, GPT AI 모델 변경 요청을 하거나..
+   당분간 그 사이트 이용하지 말기.
+    javax → jakarta
+    jakarta.persistence
+    java 에서 DB를 다루기 위해 만든 JPA 표준 규칙 모음
+    JPA (Java Persistence API)
+    = Java 에서 DB를 객체로 다루는 표준 방법
+
+    javax = springboot 3 아래 버전은 모두 javax 가 맞으나, 현재 만약에 스프링부트를 공부하고 싶다.
+    스프링을 공부하고 싶다 라면 3버전 이상을 공부할 것이고, 이럴 때는 jakarta 가 맞다.
+    하지만 회사에서 springboot 1~2 버전을 사용한다면 javax가 맞다.
+    실제 구현 Hibernate 가 담당
+
+import jakarta.persistence.Table;
+
+@Audited.Table(name="posts")
+ */
+@Table(name="posts") // DataBase를 생성할 때 table 명칭을 posts로 만들수 있다.
+// 데이터베이스에서 table명칭의 경우 복수
+// java 에서 객체를 생성할 때 작성하는 class 파일명칭 단수
+// 데이터베이스는 데이터를 1개 이상 담고 있기 때문
+// java 의 경우 각 데이터별로 객체를 한 번씩 사용하기 때문에 단수
 public class Post {
-    @Id
+    @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
