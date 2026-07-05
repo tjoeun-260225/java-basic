@@ -51,7 +51,11 @@ DB에 저장할 수 있다.
     자바스크립트로 회원가입을 하는 형태를 많이 사용
     ajax fetch promise sql postgre
      -->
-    아이디 : <input type="text" name="member_username"><br>
+    아이디 : <input type="text"
+                 name="member_username"
+                 pattern="[a-zA-Z0-9가-힇]"
+>
+    <br>
     이메일 : <input type="text" name="member_email"><br>
     비밀번호 : <input type="text" name="member_password"><br>
     <!-- 만약에
