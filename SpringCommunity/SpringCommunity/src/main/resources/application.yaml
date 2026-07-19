@@ -1,11 +1,18 @@
 spring:
   application:
     name: SpringCommunity
+# h2 의 경우 인텔리제이의 h2 와
+# 스프링부트에서 동작하는 db는 각각 분리된 개별 db
+# 만약 스프링부트에서 실행하고 싶은 h2 가 있다면
+# 스프링부트에서 자동 완성하는 h2를 사용하면 안된다.
+
   datasource:
-    url: jdbc:h2:mem:community;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+#    url: jdbc:h2:mem:community;MODE=MySQL
+    # postgresql 을 사용할 것이고 ://주소:port번호/db이름
+    url: jdbc:postgresql://localhost:5432/community
+    driver-class-name: org.postgresql.Driver
+    username: postgres #ql
+    password: tjee1234
   sql:
     init:
       mode: always
