@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 - @Controller + @ResponseBody
   return 결과를 .html이 아니라
          특정 데이터를 JSON으로 자동 변환해서 사용
--> 오늘 오후나 다음주 쯤 들어갈 예정
  */
 @Controller
 public class 흐름Controller {
-
+    /*
+    만약 @Controller 에서 특정 url api 만
+    @RestController 형태로 사용하길 원하다면
+    특정 @____Mapping 위 아래에 @ResponseBody 어노테이션을 추가해주면
+    @RestController 와 같이 작동한다.
+     */
+    @ResponseBody
     @GetMapping("/testurl")
     public String 테스트페이지(Model model) {
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.domain.SpringCommunity.mapper.MemberMapper">
+
+   <!--
+   SQL 문 id 는 mapper.java 에서 작성한 메서드 명칭과 동일하게 작성
+
+     int insertMember(Member member);
+     -> 저장에 해당하는 id 에 기입
+
+     int countById(String id);
+     -> 중복확인에 해당하는 id 에 기입
+   -->
+
+    <insert id="insertMember">
+        INSERT INTO member (id, name, password)
+        VALUES (#{id}, #{name}, #{password})
+        <!-- mapper.xml 에서는 맨 뒤에 ; 을 붙이지 않는다. -->
+    </insert>
+    <!--
+    parameterType
+        - where 내부 #{id} 에 들어갈 데이터 형태 자료형
+    resultType
+        - where 로 검색한 결과에 대한 데이터 형태 자료형
+
+    SELECT COUNT(*) FROM member WHERE id = 'gildong'
+    -> gildong 이라는 아이디가 1건 이라도 조회 되면
+       숫자로 표기
+
+       1 존재 2존재 와 같이 몇 개 존재하는지 count 형태로 반환
+       없다면 숫자 0이 전달
+
+       parameterType = 매개변수 내부에 검색될 데이터 형태
+       resultType    = sql 의 결과를 어떻게 자바로 반환 전달할 것인가
+
+    -->
+    <select id="countById" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE id = #{id}
+    </select>
+</mapper>
