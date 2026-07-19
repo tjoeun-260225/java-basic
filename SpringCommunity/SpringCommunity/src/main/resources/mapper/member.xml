@@ -41,4 +41,11 @@
         FROM member
         WHERE id = #{id}
     </select>
+
+    <!-- 로그인 시 아이디로 회원 1명 조회(비밀번호는 암호화된 값 -->
+    <select id="findById" parameterType="String" resultMap="memberDto">
+        SELECT id, name, password
+        FROM member
+        WHERE id = #{id}
+    </select>
 </mapper>
