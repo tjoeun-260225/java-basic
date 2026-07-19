@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+// 3.5 라인은 2026년 6월 30일에 오픈소스 지원 종료
+// 지원종료되었다 하나 회사에서 사용하는 버전을 맞추어 사용하는 것이 좋다.
+    id 'org.springframework.boot' version '3.5.16'
+//	id 'org.springframework.boot' version '4.0.7'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.domain'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+//		languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    // springboot 3버전대는 web 사용
+    // 현재로서는 web 을 사용하는 것이 안전
+    // 4버전 대 부터는 모듈이 세분화되면서 webmvc 와 webflux 등으로 모듈이 나누어짐
+    // webmvc 와 web 은 하는 일이 거의 비슷하다.
+    // webflux 리액티브 방식 스레드를 적게 사용하면서 대량의 동시 요청을
+    // 처리하고 싶을 때 사용 스트리밍, 매우 높은 동시성 처리 와 같은 작업
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    // implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.projectlombok:lombok'
+    // error: variable memberService not initialized in the default
+
+    // implementation 'org.projectlombok:lombok'
+    // 애노테이션 자체를 코드에서 사용할 수 있게 라이브러리 호출
+    // 웹사이트에서 가져오는 기능
+
+    // annotationProcessor 'org.projectlombok:lombok'
+    // 애노테이션을 실제로 코딩에서 읽어서 생성자 / setter / getter
+    // 코드를 자동으로 만들어주는 도구를 실행시키는 것
+    // 웹사이트에서 가져온 도구 사용 -> lombok 개발자가 이런식으로 사용하도록 세팅
+
+    annotationProcessor 'org.projectlombok:lombok'
+    // 회원가입할 때 비밀번호를 암호화 처리해서
+    // 저장할 때 사용하는 모듈을 가져오기
+    // 스타터 추가로 추가한 모듈은 알아서 동기화 처리가 되므로
+    // 코끼리 모양이 안보이는것이 당연하다
+    // 하지만 개발자가 숫자를 변형하거나 문자를 직접 변형한 것은
+    // 코끼리 동기화 모양이 나올 것이고 동기화 모양을 클릭해야지
+    // 변경한 버전이나 명칭을 사용할 수 있다.
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    // 위에는 전문적으로 모든 보안을 세팅하는 방법
+
+    // 아래는 비밀번호 암호화만 우선적으로 사용하는 방법
+    implementation 'org.springframework.security:spring-security-crypto:6.3.4'
+
+
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'org.springframework.security:spring-security-test'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
