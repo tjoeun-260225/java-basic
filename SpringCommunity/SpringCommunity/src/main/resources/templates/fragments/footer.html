@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+사용 방법
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+-->
+
+<footer th:fragment="footer"
+        class="bg-dark text-white mt-5 py-4">
+
+    <div class="container">
+
+        <div class="row">
+
+            <!-- 사이트 정보 -->
+            <div class="col-md-6 mb-3">
+
+                <h5 class="fw-bold">
+                    🌐 Spring Community
+                </h5>
+
+                <p class="text-light mb-0">
+                    Spring Boot와 Thymeleaf를 이용하여 만든
+                    커뮤니티 프로젝트입니다.
+                </p>
+
+            </div>
+
+            <!-- 메뉴 -->
+            <div class="col-md-3 mb-3">
+
+                <h6 class="fw-bold">
+                    메뉴
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a th:href="@{/}"
+                           class="text-decoration-none text-light">
+                            홈
+                        </a>
+                    </li>
+
+                    <li th:if="${session.loginMember != null}">
+                        <a th:href="@{/mypage}"
+                           class="text-decoration-none text-light">
+                            마이페이지
+                        </a>
+                    </li>
+
+                    <li th:if="${session.loginMember == null}">
+                        <a th:href="@{/login}"
+                           class="text-decoration-none text-light">
+                            로그인
+                        </a>
+                    </li>
+
+                    <li th:if="${session.loginMember == null}">
+                        <a th:href="@{/signup}"
+                           class="text-decoration-none text-light">
+                            회원가입
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- 연락처 -->
+            <div class="col-md-3 mb-3">
+
+                <h6 class="fw-bold">
+                    Contact
+                </h6>
+
+                <p class="mb-1">
+                    📧 admin@example.com
+                </p>
+
+                <p class="mb-1">
+                    📞 010-1234-5678
+                </p>
+
+                <p class="mb-0">
+                    📍 Seoul, Korea
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr class="border-light">
+
+        <div class="text-center">
+
+            <small>
+                © 2026 Spring Community.
+                All Rights Reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</html>

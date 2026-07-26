@@ -1,167 +1,324 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css 를 편하게 사용할 수 있는 부트스트랩 적용 -->
 
-    <title>signup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>회원가입 | Spring Community</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
 
-<h1>회원가입</h1>
-<form action="/signup" method="post" enctype="multipart/form-data">
-    <div>
-        <label>아이디 :
-            <input type="text" name="id" required>
-        </label>
-    </div>
-    <div>
-        <label>이메일 :
-            <input type="email" name="email" id="email" required>
-        </label>
-        <button type="button" onclick="sendEmailCode()">인증번호 발송</button>
-    </div>
-    <div>
-        <label>인증번호 :
-            <input type="text" id="code">
-        </label>
-        <button type="button" onclick="verifyEmailCode()">인증번호 확인</button>
-        <span id="verifyResult"></span>
-    </div>
-    <div>
-        <label>이름 :
-            <input type="text" name="name" required>
-        </label>
-    </div>
-    <div>
-        <label>비밀번호 :
-            <input type="password" name="password" required>
-        </label>
-    </div>
-    <div>
-        <label>프로필 이미지 :
-            <!--
-            file 들 중에서 첨부 가능한 파일의 확장자 형태를 설정
-            image 파일을 우선적으로 가져올 수 있도록 허용
-            만약 image 파일 중에서 png 파일만 가져오겠다.
-            <input type="file" name="profileImage" accept="image/png">
+<!-- Header -->
+<div th:replace="~{fragments/header :: header}"></div>
 
-            Cannot convert value of type 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 'java.lang.String' for property 'profileImage': no matching editors or conversion strategy found]]
-            스프링에서 파일 데이터를 가져올 때는 Member 필드의 작성한 변수이름과
-            html name 명칭을 다르게 작성
-            -->
-            <input type="file" name="profileImg" accept="image/*">
-        </label>
+<div class="container my-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-5">
+
+                        <h2 class="fw-bold text-primary">
+                            ✨ 회원가입
+                        </h2>
+
+                        <p class="text-muted">
+                            Spring Community 회원이 되어 다양한 서비스를 이용해보세요.
+                        </p>
+
+                    </div>
+
+                    <form action="/signup"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <!-- 아이디 -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                아이디
+                            </label>
+
+                            <input
+                                    type="text"
+                                    name="id"
+                                    class="form-control form-control-lg"
+                                    placeholder="아이디를 입력하세요"
+                                    required>
+
+                        </div>
+
+                        <!-- 이메일 -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                이메일
+                            </label>
+
+                            <div class="input-group">
+
+                                <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="example@email.com"
+                                        required>
+
+                                <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        onclick="sendEmailCode()">
+
+                                    인증번호 발송
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <!-- 인증번호 -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                인증번호
+                            </label>
+
+                            <div class="input-group">
+
+                                <input
+                                        type="text"
+                                        id="code"
+                                        class="form-control"
+                                        placeholder="인증번호 입력">
+
+                                <button
+                                        class="btn btn-success"
+                                        type="button"
+                                        onclick="verifyEmailCode()">
+
+                                    확인
+
+                                </button>
+
+                            </div>
+
+                            <small
+                                    id="verifyResult"
+                                    class="fw-bold mt-2 d-block">
+                            </small>
+
+                        </div>
+
+                        <!-- 이름 -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                이름
+                            </label>
+
+                            <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control form-control-lg"
+                                    placeholder="이름을 입력하세요"
+                                    required>
+
+                        </div>
+
+                        <!-- 비밀번호 -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                비밀번호
+                            </label>
+
+                            <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control form-control-lg"
+                                    placeholder="비밀번호를 입력하세요"
+                                    required>
+
+                        </div>
+
+                        <!-- 프로필 이미지 -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                프로필 이미지
+                            </label>
+
+                            <input
+                                    type="file"
+                                    name="profileImg"
+                                    accept="image/*"
+                                    class="form-control">
+
+                        </div>
+
+                        <!-- 버튼 -->
+                        <div class="d-grid gap-2">
+
+                            <button
+                                    type="submit"
+                                    class="btn btn-success btn-lg">
+
+                                회원가입
+
+                            </button>
+
+                            <button
+                                    type="reset"
+                                    class="btn btn-outline-secondary">
+
+                                초기화
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+
+                        <p class="mb-2">
+                            이미 회원이신가요?
+                        </p>
+
+                        <a th:href="@{/login}"
+                           class="btn btn-primary">
+
+                            로그인
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <!-- btn = button 에서 자음을 축소하여 버튼의 줄임말로 많이 사용-->
-    <button type="reset" class="btn btn-outline-secondary">초기화</button>
-    <button type="submit" class="btn btn-primary">회원가입</button>
-</form>
+
+</div>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    /**
-     * <input type="email" name="email" id="email" required>
-     * <button type="button" onclick="sendEmailCode()">인증번호 발송</button>
-     *
-     * 인증번호 발송 버튼을 클릭하면 실행되는 함수
-     * onclick="sendEmailCode()" 로 연결되어 있다.
-     *
-     * document.getElementById("email").value
-     * html 에서 id="email" 인 input 태그를 찾아서, 사용자가 입력한 이메일 값을 가져온다.
-     * document 웹 문서에서 id가 "email" 인 요소를 찾는 자바스크립트 문법
-     * .value 는  id가 email 인 input 에 입력된 값을 의미
-     *
-     * fetch 는 자바스크립트에서 서버에 요청을 보내는 함수(=기능)
-     * /email/send?email=      백엔드 EmailController 에 있는
-     * @PostMapping("/email/send") 로 요청을 보내면서
-     * email 파라미터에 사용자가 입력한 값을 함께 전달
-     *
-     * encodeURIComponent(email) 이메일 안에 작성되어 있는 @, . 과 같은 특수문자가
-     * URL 주소에서 깨지지 않도록 안전한 상태로 변환해주는 기능
-     *
-     * {method: "POST"} → GET 이 아니라 POST 식으로 요청한다는 옵션
-     *      컨트롤러에도 반드시 @PostMapping 형식으로 맞추어야 한다.
-     *
-     *  res = 서버가 보낸 데이터가 들어있는 변수
-     */
-    function sendEmailCode() {
-        const email = document.getElementById("email").value;
-        fetch("/email/send?email=" + encodeURIComponent(email), {method: "POST"})
-            .then(res => res.text()) // 서버에서 전달한 텍스트를 받아
-            .then(msg => alert(msg));
-        // 소비자에게 msg 라는 변수에 담아 백엔드에서 전달한 데이터를 반환
-        // alert 알림창으로 x 나 확인 버튼을 클릭해야 닫을 수 있는 작은 화면 띄움
-        /*
-        백엔드 - 프론트엔드 개발 에서 확인할 때
-        웹 F12 console 창을 열어 어디서 문제가 발생했는지 확인
-        signup:54 Uncaught (in promise) TypeError: msg is not a function at signup:54:32
 
-        스프링부트의 경우 실행 화면에 나오는 에러 메세지를 확인하며 코드 수정
-         */
-    }
-    function verifyEmailCode() {
+    function sendEmailCode() {
+
         const email = document.getElementById("email").value;
-        const code = document.getElementById("code").value;
-        fetch("/email/verify?email=" + encodeURIComponent(email) + "&code=" + encodeURIComponent(code), {method: "POST"})
-            .then(res => res.text())
-            .then(msg => {
-                document.getElementById("verifyResult").innerText = msg
+
+        if(email.trim() === ""){
+
+            alert("이메일을 입력해주세요.");
+            return;
+        }
+
+        fetch("/email/send?email=" + encodeURIComponent(email), {
+
+            method:"POST"
+
+        })
+
+            .then(res=>res.text())
+
+            .then(msg=>{
+
+                alert(msg);
+
+            })
+
+            .catch(()=>{
+
+                alert("인증번호 발송에 실패했습니다.");
+
             });
+
+    }
+
+    function verifyEmailCode(){
+
+        const email=document.getElementById("email").value;
+
+        const code=document.getElementById("code").value;
+
+        fetch("/email/verify?email="
+
+            + encodeURIComponent(email)
+
+            + "&code="
+
+            + encodeURIComponent(code),
+
+            {
+
+                method:"POST"
+
+            })
+
+            .then(res=>res.text())
+
+            .then(msg=>{
+
+                const result=document.getElementById("verifyResult");
+
+                result.innerText=msg;
+
+                if(msg.includes("성공")){
+
+                    result.className="text-success fw-bold mt-2 d-block";
+
+                }else{
+
+                    result.className="text-danger fw-bold mt-2 d-block";
+
+                }
+
+            })
+
+            .catch(()=>{
+
+                alert("인증 확인 중 오류가 발생했습니다.");
+
+            });
+
     }
 
 </script>
-<!--
-보통
-link    태그는 /head 태그가 닫히기 전에 넣어주고
-script 태그는 /body 태그가  닫히기 전에 넣어준다.
 
-인터넷 브라우저는 html을 위에서부터 아래로 읽으면서 화면을 그려 나간다.
-css 가 없으면 화면에 어떻게 디자인을 적용할지 모른다.
-head 에서 css 를 먼저 로딩하고, 브라우저가 스타일 정보를 다 파악한 다음
-body 에 내용을 디자인 한다.
-이 디자인이 다 입혀진 html 화면이 소비자의 눈에 보이게 된다.
-
-css를 body 아래쪽에 넣으면 스타일이 렌더링할 때 어느순간에는 깨지는 현상 발생
-
-디자인을 입힌 완성된 모습으로 한 번에 보여주기 위하여 css 는 미리 head 에서
-불러와 주는 것이 안전하다.
-
-script 는 body 끝에 넣는 이유
-- js 는 html 요소를 조작하는 경우가 많다.
-- 그래서 body 태그의 각각의 요소들이 어디에 존재하는지 파악하고,
-파악한 후 요소들의 움직임이나 동작을 적용
-어디에 위치한 html 태그를 어떻게 동작해야 할 때 사용
-
-요소 와 태그의 차이
-
-<div> </div> -> 단순 태그
-
-<div>안녕</div> -> 태그 + 개발자가 표현하고자 하는 데이터 추가 = 요소
-
-요소
-태그 + 태그 내부에 존재하는 속성이나 개발자나 소비자가 작성한 데이터
--->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
 </body>
+
 </html>
-<!--
-2026-07-26T12:11:22.269+09:00 ERROR 9980 --- [SpringCommunity] [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.mail.MailSendException: Failed messages: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 530-5.7.0 Must issue a STARTTLS command first. For more information, go to
-530-5.7.0  https://support.google.com/a/answer/3221692 and review RFC 3207
-530 5.7.0 specifications. 41be03b00d2f7-cbbb66b2843sm1775925a12.16 - gsmtp
-; message exceptions (1) are:
-Failed message 1: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 530-5.7.0 Must issue a STARTTLS command first. For more information, go to
-530-5.7.0  https://support.google.com/a/answer/3221692 and review RFC 3207
-530 5.7.0 specifications. 41be03b00d2f7-cbbb66b2843sm1775925a12.16 - gsmtp
-] with root cause
-
-application.yaml 에서 보이지 않는 들여쓰기 특수문자가 들어있는 상황
-        starttls:
-          enable: true
-          명령을 먼저 보낸 후 javaMail을 시도하겠다.
-
--->

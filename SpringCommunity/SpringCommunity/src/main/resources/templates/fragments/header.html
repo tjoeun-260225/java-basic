@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--
+사용 방법
+
+<head>
+    ...
+</head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+내용...
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm"
+     th:fragment="header">
+
+    <div class="container">
+
+        <!-- 로고 -->
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            🌐 Spring Community
+        </a>
+
+        <!-- 모바일 버튼 -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- 메뉴 -->
+        <div class="collapse navbar-collapse"
+             id="navbarMenu">
+
+            <!-- 왼쪽 메뉴 -->
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="@{/}">
+                        홈
+                    </a>
+                </li>
+
+                <li class="nav-item"
+                    th:if="${session.loginMember != null}">
+
+                    <a class="nav-link"
+                       th:href="@{/mypage}">
+                        마이페이지
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <!-- 오른쪽 -->
+            <ul class="navbar-nav ms-auto">
+
+                <!-- 로그인 전 -->
+                <th:block th:if="${session.loginMember == null}">
+
+                    <li class="nav-item me-2">
+
+                        <a class="btn btn-outline-light"
+                           th:href="@{/login}">
+                            로그인
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="btn btn-warning"
+                           th:href="@{/signup}">
+                            회원가입
+                        </a>
+
+                    </li>
+
+                </th:block>
+
+                <!-- 로그인 후 -->
+                <th:block th:if="${session.loginMember != null}">
+
+                    <li class="nav-item d-flex align-items-center me-3">
+
+                        <img
+                                th:if="${session.loginMember.profileImage != null}"
+                                th:src="@{'/uploads/' + ${session.loginMember.profileImage}}"
+                                class="rounded-circle border border-white"
+                                width="40"
+                                height="40"
+                                style="object-fit:cover;">
+
+                        <span class="text-white fw-semibold ms-2"
+                              th:text="${session.loginMember.name + '님'}">
+                        </span>
+
+                    </li>
+
+                    <li class="nav-item me-2">
+
+                        <a class="btn btn-light"
+                           th:href="@{/mypage}">
+                            마이페이지
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="btn btn-danger"
+                           th:href="@{/logout}">
+                            로그아웃
+                        </a>
+
+                    </li>
+
+                </th:block>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+</html>

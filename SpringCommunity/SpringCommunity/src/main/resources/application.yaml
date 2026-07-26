@@ -17,7 +17,8 @@ spring:
     password: tjee1234
   sql:
     init:
-      mode: always
+#      mode: always
+      mode: never
   mail:
     host: smtp.gmail.com
     port: 587
