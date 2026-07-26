@@ -47,11 +47,45 @@
 </form>
 
 <script>
+    /**
+     * <input type="email" name="email" id="email" required>
+     * <button type="button" onclick="sendEmailCode()">인증번호 발송</button>
+     *
+     * 인증번호 발송 버튼을 클릭하면 실행되는 함수
+     * onclick="sendEmailCode()" 로 연결되어 있다.
+     *
+     * document.getElementById("email").value
+     * html 에서 id="email" 인 input 태그를 찾아서, 사용자가 입력한 이메일 값을 가져온다.
+     * document 웹 문서에서 id가 "email" 인 요소를 찾는 자바스크립트 문법
+     * .value 는  id가 email 인 input 에 입력된 값을 의미
+     *
+     * fetch 는 자바스크립트에서 서버에 요청을 보내는 함수(=기능)
+     * /email/send?email=      백엔드 EmailController 에 있는
+     * @PostMapping("/email/send") 로 요청을 보내면서
+     * email 파라미터에 사용자가 입력한 값을 함께 전달
+     *
+     * encodeURIComponent(email) 이메일 안에 작성되어 있는 @, . 과 같은 특수문자가
+     * URL 주소에서 깨지지 않도록 안전한 상태로 변환해주는 기능
+     *
+     * {method: "POST"} → GET 이 아니라 POST 식으로 요청한다는 옵션
+     *      컨트롤러에도 반드시 @PostMapping 형식으로 맞추어야 한다.
+     *
+     *  res = 서버가 보낸 데이터가 들어있는 변수
+     */
     function sendEmailCode() {
         const email = document.getElementById("email").value;
         fetch("/email/send?email=" + encodeURIComponent(email), {method: "POST"})
-            .then(res => res.text())
+            .then(res => res.text()) // 서버에서 전달한 텍스트를 받아
             .then(msg => alert(msg));
+        // 소비자에게 msg 라는 변수에 담아 백엔드에서 전달한 데이터를 반환
+        // alert 알림창으로 x 나 확인 버튼을 클릭해야 닫을 수 있는 작은 화면 띄움
+        /*
+        백엔드 - 프론트엔드 개발 에서 확인할 때
+        웹 F12 console 창을 열어 어디서 문제가 발생했는지 확인
+        signup:54 Uncaught (in promise) TypeError: msg is not a function at signup:54:32
+
+        스프링부트의 경우 실행 화면에 나오는 에러 메세지를 확인하며 코드 수정
+         */
     }
     function verifyEmailCode() {
         const email = document.getElementById("email").value;
@@ -100,3 +134,19 @@ script 는 body 끝에 넣는 이유
         crossorigin="anonymous"></script>
 </body>
 </html>
+<!--
+2026-07-26T12:11:22.269+09:00 ERROR 9980 --- [SpringCommunity] [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.mail.MailSendException: Failed messages: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 530-5.7.0 Must issue a STARTTLS command first. For more information, go to
+530-5.7.0  https://support.google.com/a/answer/3221692 and review RFC 3207
+530 5.7.0 specifications. 41be03b00d2f7-cbbb66b2843sm1775925a12.16 - gsmtp
+; message exceptions (1) are:
+Failed message 1: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 530-5.7.0 Must issue a STARTTLS command first. For more information, go to
+530-5.7.0  https://support.google.com/a/answer/3221692 and review RFC 3207
+530 5.7.0 specifications. 41be03b00d2f7-cbbb66b2843sm1775925a12.16 - gsmtp
+] with root cause
+
+application.yaml 에서 보이지 않는 들여쓰기 특수문자가 들어있는 상황
+        starttls:
+          enable: true
+          명령을 먼저 보낸 후 javaMail을 시도하겠다.
+
+-->

@@ -15,8 +15,8 @@
    -->
 
     <insert id="insertMember">
-        INSERT INTO member (id, name, password)
-        VALUES (#{id}, #{name}, #{password})
+        INSERT INTO member (id, name, password, email)
+        VALUES (#{id}, #{name}, #{password}, #{email})
         <!-- mapper.xml 에서는 맨 뒤에 ; 을 붙이지 않는다. -->
     </insert>
     <!--

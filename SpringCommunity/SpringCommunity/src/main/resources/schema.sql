@@ -4,8 +4,10 @@
 -- 명칭 구분 user_id 와 같은 형식으로 많이 사용
 DROP TABLE IF EXISTS member;
 
-CREATE TABLE member (
-    id VARCHAR(50) PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    password VARCHAR(200) NOT NULL
+CREATE TABLE member
+(
+    id       VARCHAR(50) PRIMARY KEY,
+    name     VARCHAR(50)  NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    email    VARCHAR(100) NOT NULL
 )
