@@ -22,7 +22,7 @@ public class MemberService {
     @Value("${file.upload-dir}")
     private String uploadDir; // application.yaml에 작성한 폴더 경로를 uploadDir 저장
 
-    public void 회원가입기능(Member member, MultipartFile profileImage) {
+    public void 회원가입기능(Member member, MultipartFile profileImg) {
         // 클라이언트가 작성한 비밀번호를 암호화해서
         //  sql 에 저장할 수 있도록 암호화 처리 작업
 
@@ -45,8 +45,8 @@ public class MemberService {
         member.setPassword(암호화완료);
 
         // 사용자가 프로필 이미지를 첨부한 경우에만 이미지 업로드 처리
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String 저장된파일이름 = 프로필이미지저장(profileImage);
+        if (profileImg != null && !profileImg.isEmpty()) {
+            String 저장된파일이름 = 프로필이미지저장(profileImg);
             member.setProfileImage(저장된파일이름);
         }
         // sql에 최종적으로 저장한다.
@@ -60,10 +60,11 @@ public class MemberService {
         String 저장파일이름 = UUID.randomUUID() + "-" + 원본파일이름;
 
         try {
-            File 저장폴더 = new File(uploadDir);
+            // 절대 경로 형태의 기준으로 이미지 저장하도록 세팅
+            File 저장폴더 = new File(uploadDir).getAbsoluteFile();
             // 저장폴더가 없으면 새로 생성
             if (!저장폴더.exists()) 저장폴더.mkdirs();
-            File 저장파일 = new File(uploadDir, 저장파일이름);
+            File 저장파일 = new File(저장폴더, 저장파일이름);
             file.transferTo(저장파일); // 업로드 된 파일을 실제 서버 디스크에 저장
         } catch (IOException e) {
             throw new RuntimeException("프로필 이미지 업로드 중 오류가 발생했습니다.", e);

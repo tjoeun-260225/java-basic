@@ -48,8 +48,12 @@
             image 파일을 우선적으로 가져올 수 있도록 허용
             만약 image 파일 중에서 png 파일만 가져오겠다.
             <input type="file" name="profileImage" accept="image/png">
+
+            Cannot convert value of type 'org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile' to required type 'java.lang.String' for property 'profileImage': no matching editors or conversion strategy found]]
+            스프링에서 파일 데이터를 가져올 때는 Member 필드의 작성한 변수이름과
+            html name 명칭을 다르게 작성
             -->
-            <input type="file" name="profileImage" accept="image/*">
+            <input type="file" name="profileImg" accept="image/*">
         </label>
     </div>
     <!-- btn = button 에서 자음을 축소하여 버튼의 줄임말로 많이 사용-->

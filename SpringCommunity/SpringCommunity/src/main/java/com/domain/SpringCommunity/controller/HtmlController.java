@@ -59,9 +59,9 @@ public class HtmlController {
 
     @PostMapping("/signup")
     public String signup(Member member,
-                         @RequestParam(value = "profileImage", required = false)
-                         MultipartFile profileImage) {
-        memberService.회원가입기능(member, profileImage);
+                         @RequestParam(value = "profileImg", required = false)
+                         MultipartFile profileImg) {
+        memberService.회원가입기능(member, profileImg);
         return "redirect:/login";    }
 
     // 오늘은 session 으로만 작업
