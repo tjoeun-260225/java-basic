@@ -5,19 +5,24 @@
     <title>메인페이지</title>
 </head>
 <body>
-    <h1>메인페이지</h1>
-    <!-- 세션에 loginMember 가있으면 로그인 상태로 판단 -->
-    <div th:if="${session.loginMember} != null">
-        <p th:text="${session.loginMember.name} + '님 반갑습니다.'"></p>
-        <a href="/mypage">마이페이지</a>
-        <a href="/logout">로그아웃</a>
-    </div>
-    <!-- unless = else 와 같은 기능으로
-    thymeleaf 에서는 else 대신
-    unless 라는 표기법을 사용한다. -->
-    <div th:unless="${session.loginMember} != null">
-        <a href="/login">로그인</a>
-        <a href="/signup">회원가입</a>
-    </div>
+<h1>메인페이지</h1>
+<!-- 세션에 loginMember 가있으면 로그인 상태로 판단 -->
+<div th:if="${session.loginMember} != null">
+    <img th:if="${session.loginMember.profileImage} != null"
+         th:src="@{'/uploads/' + ${session.loginMember.profileImage}}"
+         width="80"
+         height="80"
+         style="border-radius:50%;">
+    <p th:text="${session.loginMember.name} + '님 반갑습니다.'"></p>
+    <a href="/mypage">마이페이지</a>
+    <a href="/logout">로그아웃</a>
+</div>
+<!-- unless = else 와 같은 기능으로
+thymeleaf 에서는 else 대신
+unless 라는 표기법을 사용한다. -->
+<div th:unless="${session.loginMember} != null">
+    <a href="/login">로그인</a>
+    <a href="/signup">회원가입</a>
+</div>
 </body>
 </html>

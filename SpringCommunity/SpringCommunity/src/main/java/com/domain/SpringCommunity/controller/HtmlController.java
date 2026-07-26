@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /*
 @Controller 나 @RestController 의 경우
@@ -56,10 +58,11 @@ public class HtmlController {
     }
 
     @PostMapping("/signup")
-    public String signup(Member member) {
-        memberService.회원가입기능(member);
-        return "redirect:/login";
-    }
+    public String signup(Member member,
+                         @RequestParam(value = "profileImage", required = false)
+                         MultipartFile profileImage) {
+        memberService.회원가입기능(member, profileImage);
+        return "redirect:/login";    }
 
     // 오늘은 session 으로만 작업
     // 다음주에 cookies session 으로 작업
@@ -87,7 +90,7 @@ public class HtmlController {
         session.setAttribute("loginMember", loginMember);
         // 로그인 세션(쿠키)의 유효시간을 30분으로 지정
         // 브라우저에 발급되는 JSESSIONID 쿠키가 30분간 활동 없으면 자동 만료처리
-        session.setMaxInactiveInterval(60*30);
+        session.setMaxInactiveInterval(60 * 30);
         return "redirect:/";
     }
 
