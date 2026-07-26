@@ -19,6 +19,19 @@
         </label>
     </div>
     <div>
+        <label>이메일 :
+            <input type="email" name="email" id="email" required>
+        </label>
+        <button type="button" onclick="sendEmailCode()">인증번호 발송</button>
+    </div>
+    <div>
+        <label>인증번호 :
+            <input type="text" id="code">
+        </label>
+        <button type="button" onclick="verifyEmailCode()">인증번호 확인</button>
+        <span id="verifyResult"></span>
+    </div>
+    <div>
         <label>이름 :
             <input type="text" name="name" required>
         </label>
@@ -33,7 +46,25 @@
     <button type="submit" class="btn btn-primary">회원가입</button>
 </form>
 
+<script>
+    function sendEmailCode() {
+        const email = document.getElementById("email").value;
+        fetch("/email/send?email=" + encodeURIComponent(email), {method: "POST"})
+            .then(res => res.text())
+            .then(msg => alert(msg));
+    }
 
+    function verifyEmailCode() {
+        const email = document.getElementById("email").value;
+        const code = document.getElementById("code").value;
+        fetch("/email/verify?email=" + encodeURIComponent(email) + "&code=" + encodeURIComponent(code), {method: "POST"})
+            .then(res => res.text())
+            .then(msg => {
+                document.getElementById("verifyResult").innerText = msg
+            });
+    }
+
+</script>
 <!--
 보통
 link    태그는 /head 태그가 닫히기 전에 넣어주고
