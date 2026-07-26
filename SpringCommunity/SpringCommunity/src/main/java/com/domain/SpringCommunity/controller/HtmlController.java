@@ -85,6 +85,9 @@ public class HtmlController {
         // 아이디 비밀번호가 존재한다면 세션에 로그인한 회원 정보 저장
         // 비밀번호는 굳이 저장하지 않아도 된다.
         session.setAttribute("loginMember", loginMember);
+        // 로그인 세션(쿠키)의 유효시간을 30분으로 지정
+        // 브라우저에 발급되는 JSESSIONID 쿠키가 30분간 활동 없으면 자동 만료처리
+        session.setMaxInactiveInterval(60*30);
         return "redirect:/";
     }
 

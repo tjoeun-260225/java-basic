@@ -1,3 +1,5 @@
+# application.yaml 은 중요한 정보가 기재되어 있어,
+# 깃허브에 파일을 업로드 하지 않는다.
 spring:
   application:
     name: SpringCommunity
@@ -27,9 +29,24 @@ spring:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-file-size: 5MB # 1개 파일 업로드 가능한 최대 크기
+      max-request-size: 5MB # 모든 파일의 크기가 총 5MB까지만 가능
+      # 프론트엔드에서 백엔드로 데이터를 넘기고,
+      # 백엔드에서 프론트엔드로 전달받은 데이터를 저장할 때
+      # 한 파일당 회사에서 업로드 가능하도록 지정한 크기까지만 허용 제한
+      # 전체 파일 또한 업로드 가능하도록 지정한 크기까지만 허용 제한
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+server:
+  servlet:
+    session:
+      timeout: 30m
 
-# mail을 보내기 위한 계정 설정 추가
+# 나의 프로젝트에서 클라이언트가 업로드한 프로필사진을
+# 저장하는 폴더 경로
+file:
+  upload-dir: uploads/profile

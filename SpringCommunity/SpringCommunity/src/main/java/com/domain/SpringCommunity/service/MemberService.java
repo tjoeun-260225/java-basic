@@ -3,8 +3,14 @@ package com.domain.SpringCommunity.service;
 import com.domain.SpringCommunity.dto.Member;
 import com.domain.SpringCommunity.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -12,7 +18,11 @@ public class MemberService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public  void 회원가입기능(Member member){
+    // application.yaml에 file.upload_dir 값을 그대로 사용
+    @Value("${file.upload-dir}")
+    private String uploadDir; // application.yaml에 작성한 폴더 경로를 uploadDir 저장
+
+    public void 회원가입기능(Member member, MultipartFile profileImage) {
         // 클라이언트가 작성한 비밀번호를 암호화해서
         //  sql 에 저장할 수 있도록 암호화 처리 작업
 
@@ -34,8 +44,31 @@ public class MemberService {
         // 암호화 처리 완료된 변수로 비밀번호 변경한 후
         member.setPassword(암호화완료);
 
+        // 사용자가 프로필 이미지를 첨부한 경우에만 이미지 업로드 처리
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String 저장된파일이름 = 프로필이미지저장(profileImage);
+            member.setProfileImage(저장된파일이름);
+        }
         // sql에 최종적으로 저장한다.
         memberMapper.insertMember(member);
+    }
+
+    private String 프로필이미지저장(MultipartFile file) {
+        // 여러 사용자가 같은 이름으로 이미지를 올려도 겹치지 않도록
+        // UUID 무작위 고유값을 파일이름에 붙여서 새 파일이름으로 생성하고 저장
+        String 원본파일이름 = file.getOriginalFilename();
+        String 저장파일이름 = UUID.randomUUID() + "-" + 원본파일이름;
+
+        try {
+            File 저장폴더 = new File(uploadDir);
+            // 저장폴더가 없으면 새로 생성
+            if (!저장폴더.exists()) 저장폴더.mkdirs();
+            File 저장파일 = new File(uploadDir, 저장파일이름);
+            file.transferTo(저장파일); // 업로드 된 파일을 실제 서버 디스크에 저장
+        } catch (IOException e) {
+            throw new RuntimeException("프로필 이미지 업로드 중 오류가 발생했습니다.", e);
+        }
+        return 저장파일이름;
     }
 
     /**
@@ -60,7 +93,7 @@ public class MemberService {
                 db멤버.getPassword()    // DB에 저장되어 있는 암호화 비밀번호 가져오기
         );
         // 비밀번호가 다르다면
-        if (!비밀번호일치) return  null;
+        if (!비밀번호일치) return null;
         // 아이디에 존재하는 비밀번호가 맞다면
         return db멤버;
     }
